@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="home_filter">
+        <item>전체보기</item>
+        <item>전사</item>
+        <item>마법사</item>
+        <item>궁수</item>
+        <item>도적</item>
+        <item>해적</item>
+    </string-array>
+</resources>
