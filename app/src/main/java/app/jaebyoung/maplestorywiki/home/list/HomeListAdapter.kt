@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import app.jaebyoung.maplestorywiki.R
+import com.bumptech.glide.Glide
 
 class HomeListAdapter(private val context: Context, private val data: ArrayList<HomeListData>): RecyclerView.Adapter<HomeListAdapter.Holder>() {
     private var mViewType: Int = 0
@@ -37,8 +38,10 @@ class HomeListAdapter(private val context: Context, private val data: ArrayList<
         private val type: TextView = itemView.findViewById(R.id.jop_type_name)
 
         fun bind(data: HomeListData) {
+            Glide.with(context).load(data.portrait).into(image)
+//            image.setImageResource(R.drawable.portrait_mercedes)
             name.text = data.jopName
-            type.text = data.jopTitle
+            type.text = data.jopType
         }
     }
 }

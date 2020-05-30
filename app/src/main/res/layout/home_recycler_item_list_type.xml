@@ -9,14 +9,14 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryLight">
+        android:background="@color/colorPrimaryLight"
+        android:padding="10dp">
 
         <ImageView
             android:id="@+id/portrait_image"
             android:layout_width="200dp"
             android:layout_height="200dp"
-            android:layout_marginStart="10dp"
-            android:src="@drawable/phantom_image"
+            android:src="@drawable/portrait_phantom"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,7 +24,6 @@
             android:id="@+id/jop_title_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
             android:text="직업이름 / Jop name"
             android:textColor="@color/colorSecondary"
             android:textSize="18dp"
@@ -36,17 +35,38 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:layout_marginEnd="10dp"
             android:text="직업군 / Jop Type"
             android:textColor="@color/colorSecondaryLight"
             android:textSize="15dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/jop_title_name" />
 
+<!--        <TextView-->
+<!--            android:id="@+id/jop_weapon"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="5dp"-->
+<!--            android:text="주무기 : 무기류"-->
+<!--            android:textColor="@color/colorSecondaryLight"-->
+<!--            android:textSize="15dp"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/jop_type_name" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/jop_status"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="5dp"-->
+<!--            android:text="주스텟 : 스텟류"-->
+<!--            android:textColor="@color/colorSecondaryLight"-->
+<!--            android:textSize="15dp"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/jop_weapon" />-->
+
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
             android:text="최고레벨 : Lv.275"
             android:textColor="@color/colorSecondary"
             android:textSize="15dp"

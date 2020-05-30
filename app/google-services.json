@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "494985914289",
+    "firebase_url": "https://maplestory-wiki.firebaseio.com",
+    "project_id": "maplestory-wiki",
+    "storage_bucket": "maplestory-wiki.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:494985914289:android:889fa05ae72347380c7f90",
+        "android_client_info": {
+          "package_name": "app.jaebyoung.maplestorywiki"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "494985914289-lg570biu5snprjrmsme0g1ipksk90lfi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDiLCjAiCUTtQUmISPiT-5vd6A1SeHDtl8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "494985914289-lg570biu5snprjrmsme0g1ipksk90lfi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

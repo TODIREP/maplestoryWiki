@@ -15,7 +15,7 @@
             android:id="@+id/portrait_image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/phantom_image"
+            android:src="@drawable/portrait_phantom"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
