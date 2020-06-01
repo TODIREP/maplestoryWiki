@@ -89,10 +89,8 @@ class HomeFragment : Fragment(), View.OnClickListener {
             ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, filterList)
         filter.adapter = filterAdapter
         filter.prompt = "분류 선택"
-// TODO : 스피너 디자인
     }
 
-    // TODO : 상세 페이지 구성
     private fun makeList(view: View) {
         recyclerView = view.findViewById(R.id.home_items_recycler)
         homeAdapter = HomeListAdapter(requireContext(), homeList)
