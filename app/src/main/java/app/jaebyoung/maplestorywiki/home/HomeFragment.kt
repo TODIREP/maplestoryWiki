@@ -35,6 +35,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
     private lateinit var fabCard: FloatingActionButton
 
     private var currentLayout: Int = 0
+
     // 0 : 리스트, 1: 그리드, 2: 카드
     private lateinit var recyclerView: RecyclerView
     private lateinit var homeAdapter: RecyclerView.Adapter<HomeListAdapter.Holder>
@@ -133,10 +134,8 @@ class HomeFragment : Fragment(), View.OnClickListener {
         homeList.add(HomeListData("1", "바이퍼", "모험가", "해적", "275"))
         homeList.add(HomeListData("1", "캐논슈터", "모험가", "해적", "275"))
 
-
         for (target in homeList) {
             val stringImage = "${firestorePath}/${target.jopName} 초상화.png"
-//            val tempData = HomeListData(stringImage, target.jopName, target.jopType, target.jopGroup, target.jopLevel)
 
             val data = hashMapOf(
                 "jop_portrait" to stringImage,
@@ -146,20 +145,18 @@ class HomeFragment : Fragment(), View.OnClickListener {
                 "jop_level" to target.jopLevel
             )
 
-            firebaseFirestore.collection("캐릭터 미리보기2")
+            firebaseFirestore.collection("캐릭터 미리보기")
                 .add(data)
                 .addOnSuccessListener {
                     Log.d("테스트", "파일 저장 ${it.id}")
                 }.addOnFailureListener {
                     Log.d("테스트", "저장 실패 ${it}")
                 }
-
-//            firebaseFirestore.collection("캐릭터 미리보기").document(target.jopName).set(tempData)
         }
     }
 
     private fun loadData() {
-        firebaseFirestore.collection("캐릭터 미리보기2")
+        firebaseFirestore.collection("캐릭터 미리보기")
             .get()
             .addOnSuccessListener { result ->
                 for (document in result) {
@@ -171,7 +168,6 @@ class HomeFragment : Fragment(), View.OnClickListener {
                     val jopGroup = data.get("jop_group").toString()
                     val jopLevel = data.get("jop_level").toString()
 
-//                    Log.d("테스트", "${portrait} ${jopName} ${jopType} ${jopGroup} ${jopLevel}")
                     homeList.add(HomeListData(portrait, jopName, jopType, jopGroup, jopLevel))
                 }
             }.addOnFailureListener {
@@ -192,8 +188,11 @@ class HomeFragment : Fragment(), View.OnClickListener {
             R.id.view_list_layer -> {
                 floatingButton()
                 if (currentLayout != 0) {
-                    recyclerView.layoutManager = LinearLayoutManager(requireContext())
+/*
+                    recyclerView.layoutManager =
+                        LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
                     homeAdapter.notifyDataSetChanged()
+*/
                 }
             }
 
@@ -207,9 +206,11 @@ class HomeFragment : Fragment(), View.OnClickListener {
             R.id.view_card_layer -> {
                 floatingButton()
                 if (currentLayout != 2) {
+/*
                     recyclerView.layoutManager =
                         LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
                     homeAdapter.notifyDataSetChanged()
+*/
                 }
             }
             R.id.home_search_button -> {
