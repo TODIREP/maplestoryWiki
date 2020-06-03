@@ -59,7 +59,6 @@ class HomeListAdapter(private val context: Context, private val data: ArrayList<
             imageRef.getFile(localFile).addOnSuccessListener {
                 val tempPath = localFile.absolutePath
                 data.setPortraitPath(tempPath)
-                Log.d("테스트", tempPath)
                 val bitmap = BitmapFactory.decodeFile(tempPath)
                 image.setImageBitmap(bitmap)
             }.addOnFailureListener {
