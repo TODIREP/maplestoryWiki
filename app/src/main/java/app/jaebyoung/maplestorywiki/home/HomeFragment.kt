@@ -256,7 +256,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
                 startActivityForResult(Intent(context, SearchActivity::class.java), homelistsearch)
             }
             R.id.do_not_touch_this -> {
-                Toast.makeText(requireContext(), "새로고침!", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(requireContext(), "새로고침!", Toast.LENGTH_SHORT).show()
                 homeAdapter.notifyDataSetChanged()
             }
         }

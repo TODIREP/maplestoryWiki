@@ -20,4 +20,6 @@
     <color name="colorSecondaryLight">#6e68ff</color>
     <color name="colorSecondaryLow">#707dff</color>
     <color name="colorSecondaryOnText">#ffffff</color>
+
+    <color name="xnaud">@android:color/transparent</color>
 </resources>
