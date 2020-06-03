@@ -8,8 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -40,6 +42,8 @@ class HomeFragment : Fragment(), View.OnClickListener {
     private lateinit var recyclerView: RecyclerView
     private lateinit var homeAdapter: RecyclerView.Adapter<HomeListAdapter.Holder>
     private var homeList = arrayListOf<HomeListData>()
+    private var saveList = arrayListOf<HomeListData>()
+    private var currentFilter: Int = 0
 
     private val firestorePath: String = "gs://maplestory-wiki.appspot.com"
     private lateinit var firebaseFirestore: FirebaseFirestore
@@ -62,7 +66,9 @@ class HomeFragment : Fragment(), View.OnClickListener {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
         firebaseFirestore = FirebaseFirestore.getInstance()
 //        tempData()
-        loadData()
+
+        homeList = loadData()
+        makeList(view)
 
         fab = view.findViewById(R.id.view_type)
         fabList = view.findViewById(R.id.view_list_layer)
@@ -76,7 +82,6 @@ class HomeFragment : Fragment(), View.OnClickListener {
         view.home_search_button.setOnClickListener(this)
         view.do_not_touch_this.setOnClickListener(this)
 
-        makeList(view)
         makeFilter(view)
 
         return view
@@ -89,6 +94,39 @@ class HomeFragment : Fragment(), View.OnClickListener {
             ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, filterList)
         filter.adapter = filterAdapter
         filter.prompt = "분류 선택"
+
+        filter.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                if (currentFilter != position) {
+                    val keyGroup = arrayOf("전체보기", "전사", "마법사", "궁수", "도적", "해적")
+                    currentFilter = position
+                    homeList.clear()
+                    when (position) {
+                        0 -> {
+                            for (item in saveList) homeList.add(item)
+                        }
+                        else -> {
+                            val keyValue = keyGroup[position]
+                            for (item in saveList) {
+                                if (item.jopGroup == keyValue) {
+                                    homeList.add(item)
+                                }
+                            }
+                        }
+                    }
+                    homeAdapter.notifyDataSetChanged()
+                }
+            }
+        }
     }
 
     private fun makeList(view: View) {
@@ -97,7 +135,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
         recyclerView.adapter = homeAdapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        recyclerView.setHasFixedSize(true)
+        recyclerView.setHasFixedSize(false)
     }
 
     private fun tempData() {
@@ -153,7 +191,8 @@ class HomeFragment : Fragment(), View.OnClickListener {
         }
     }
 
-    private fun loadData() {
+    private fun loadData(): ArrayList<HomeListData> {
+        val tempData = arrayListOf<HomeListData>()
         firebaseFirestore.collection("캐릭터 미리보기")
             .get()
             .addOnSuccessListener { result ->
@@ -166,11 +205,13 @@ class HomeFragment : Fragment(), View.OnClickListener {
                     val jopGroup = data.get("jop_group").toString()
                     val jopLevel = data.get("jop_level").toString()
 
-                    homeList.add(HomeListData(portrait, jopName, jopType, jopGroup, jopLevel))
+                    tempData.add(HomeListData(portrait, jopName, jopType, jopGroup, jopLevel))
+                    saveList.add(HomeListData(portrait, jopName, jopType, jopGroup, jopLevel))
                 }
             }.addOnFailureListener {
                 Log.d("테스트", "에러발생 ${it}")
             }
+        return tempData
     }
 
     // TODO : 리사이클러뷰 뷰타입 동적 변경
@@ -215,6 +256,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
                 startActivityForResult(Intent(context, SearchActivity::class.java), homelistsearch)
             }
             R.id.do_not_touch_this -> {
+                Toast.makeText(requireContext(), "새로고침!", Toast.LENGTH_SHORT).show()
                 homeAdapter.notifyDataSetChanged()
             }
         }
