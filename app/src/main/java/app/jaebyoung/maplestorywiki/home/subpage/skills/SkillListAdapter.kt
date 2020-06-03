@@ -1,6 +1,7 @@
 package app.jaebyoung.maplestorywiki.home.subpage.skills
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.BitmapFactory
 import android.util.Log
 import android.view.LayoutInflater
@@ -53,6 +54,12 @@ class SkillListAdapter(private val context: Context, private val data: ArrayList
             }
             name.text = data.skillName
             maxLevel.setText("최고 레벨 : ${data.maxLevel}")
+
+            itemView.setOnClickListener {
+                val intent = Intent(context, SkillDetailContent::class.java)
+                intent.putExtra("data", data)
+                context.startActivity(intent)
+            }
         }
     }
 }

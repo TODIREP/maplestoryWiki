@@ -59,7 +59,7 @@ class SubViewSkills : Fragment(), View.OnClickListener {
             .get().addOnSuccessListener { result ->
                 for (document in result) {
                     val data = document.data
-                    skillList.add(
+                    skillList0.add(
                         SkillListData(
                             data.get("skillIconImage").toString(),
                             data.get("skillName").toString(),
@@ -111,7 +111,7 @@ class SubViewSkills : Fragment(), View.OnClickListener {
         var targetList = arrayListOf<SkillListData>()
         when (id) {
             R.id.update_button -> {
-                updateThing()
+                updateClassThing()
             }
             R.id.download_button -> {
                 downLoad()
@@ -204,7 +204,7 @@ class SubViewSkills : Fragment(), View.OnClickListener {
         skillsView.setHasFixedSize(false)
     }
 
-    private fun updateThing() {
+    private fun updateClassThing() {
         val firestorePath = "gs://maplestory-wiki.appspot.com"
         val jopName = "팬텀"
         val storage = FirebaseFirestore.getInstance()

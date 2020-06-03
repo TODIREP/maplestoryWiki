@@ -44,9 +44,9 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:background="#66000000"
-            app:layout_constraintBottom_toBottomOf="@id/sub_view_skills_layout"
-            app:layout_constraintEnd_toStartOf="@id/sub_view_skills_layout"
-            app:layout_constraintStart_toEndOf="@id/sub_view_basic_layout"
+            app:layout_constraintBottom_toBottomOf="@+id/sub_view_skills_layout"
+            app:layout_constraintEnd_toStartOf="@+id/sub_view_skills_layout"
+            app:layout_constraintStart_toEndOf="@+id/sub_view_basic_layout"
             app:layout_constraintTop_toTopOf="@+id/sub_view_basic_layout" />
 
         <androidx.constraintlayout.widget.ConstraintLayout

@@ -99,7 +99,7 @@
         android:id="@+id/skills_level_4"
         android:layout_width="0dp"
         android:layout_height="?attr/actionBarSize"
-        app:layout_constraintEnd_toStartOf="@id/skills_level_5"
+        app:layout_constraintEnd_toStartOf="@+id/skills_level_5"
         app:layout_constraintStart_toEndOf="@+id/skills_level_3"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -158,7 +158,7 @@
         android:visibility="gone"
         app:layout_constraintEnd_toStartOf="@+id/download_button"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/skills_level_bar" />
+        app:layout_constraintTop_toBottomOf="@+id/skills_level_bar" />
 
     <TextView
         android:id="@+id/download_button"
@@ -172,7 +172,7 @@
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/update_button"
-        app:layout_constraintTop_toBottomOf="@id/skills_level_bar" />
+        app:layout_constraintTop_toBottomOf="@+id/skills_level_bar" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
