@@ -67,7 +67,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
         firebaseFirestore = FirebaseFirestore.getInstance()
 //        tempData()
 
-        homeList = loadData()
+        loadData()
         makeList(view)
 
         fab = view.findViewById(R.id.view_type)
@@ -191,8 +191,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
         }
     }
 
-    private fun loadData(): ArrayList<HomeListData> {
-        val tempData = arrayListOf<HomeListData>()
+    private fun loadData() {
         firebaseFirestore.collection("캐릭터 미리보기")
             .get()
             .addOnSuccessListener { result ->
@@ -205,13 +204,13 @@ class HomeFragment : Fragment(), View.OnClickListener {
                     val jopGroup = data.get("jop_group").toString()
                     val jopLevel = data.get("jop_level").toString()
 
-                    tempData.add(HomeListData(portrait, jopName, jopType, jopGroup, jopLevel))
+                    homeList.add(HomeListData(portrait, jopName, jopType, jopGroup, jopLevel))
                     saveList.add(HomeListData(portrait, jopName, jopType, jopGroup, jopLevel))
                 }
+                homeAdapter.notifyDataSetChanged()
             }.addOnFailureListener {
                 Log.d("테스트", "에러발생 ${it}")
             }
-        return tempData
     }
 
     // TODO : 리사이클러뷰 뷰타입 동적 변경

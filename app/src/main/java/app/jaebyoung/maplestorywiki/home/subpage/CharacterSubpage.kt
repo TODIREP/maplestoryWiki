@@ -63,8 +63,8 @@ class CharacterSubpage : AppCompatActivity(), View.OnClickListener {
                     sub_view_skills_bar.setBackgroundColor(resources.getColor(R.color.colorPrimary))
                     currentView = 0
                 }
-                if (basicFragment == null) basicFragment = SubViewBasic()
-                replaceFragment(basicFragment)
+//                if (basicFragment == null) basicFragment = SubViewBasic()
+                replaceFragment(SubViewBasic())
             }
             R.id.sub_view_skills_layout -> {
                 if (currentView != 1) {
@@ -74,8 +74,8 @@ class CharacterSubpage : AppCompatActivity(), View.OnClickListener {
                     sub_view_skills_bar.setBackgroundColor(resources.getColor(R.color.colorSecondary))
                     currentView = 1
                 }
-                if (skillsFragment == null) skillsFragment = SubViewSkills()
-                replaceFragment(skillsFragment)
+//                if (skillsFragment == null) skillsFragment = SubViewSkills()
+                replaceFragment(SubViewSkills())
             }
         }
     }

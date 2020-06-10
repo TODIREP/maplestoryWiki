@@ -14,7 +14,7 @@
             android:id="@+id/skills_icon_image"
             android:layout_width="60dp"
             android:layout_height="match_parent"
-            android:src="@drawable/heros_of_maple"
+            android:src="@drawable/maple_icon_image"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
-            android:text="메이플 용사"
+            android:text="스킬 이름 : ???????"
             android:textColor="@color/colorSecondary"
             android:textSize="20dp"
             app:layout_constraintStart_toEndOf="@+id/skills_icon_image"
@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="5dp"
-            android:text="최고 레벨 : 30"
+            android:text="최고 레벨 : ??"
             android:textColor="@color/colorSecondaryLight"
             android:textSize="15dp"
             app:layout_constraintBottom_toBottomOf="@+id/skills_icon_image"

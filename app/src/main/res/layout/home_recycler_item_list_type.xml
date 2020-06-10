@@ -16,7 +16,6 @@
             android:id="@+id/portrait_image"
             android:layout_width="200dp"
             android:layout_height="200dp"
-            android:src="@drawable/portrait_phantom"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

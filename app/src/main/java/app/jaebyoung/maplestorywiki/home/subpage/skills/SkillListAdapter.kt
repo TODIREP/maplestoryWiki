@@ -43,6 +43,10 @@ class SkillListAdapter(private val context: Context, private val data: ArrayList
                 val imageRef = storage.getReferenceFromUrl(data.skillIcon)
                 val localFile = File.createTempFile("images", ".png")
 
+                val tempSkillIcon =
+                    BitmapFactory.decodeResource(context.resources, R.drawable.maple_icon_image)
+                icons.setImageBitmap(tempSkillIcon)
+
                 imageRef.getFile(localFile).addOnSuccessListener {
                     val tempPath = localFile.absolutePath
                     val bitmap = BitmapFactory.decodeFile(tempPath)

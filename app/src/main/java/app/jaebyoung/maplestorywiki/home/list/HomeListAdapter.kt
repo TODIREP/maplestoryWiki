@@ -12,6 +12,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import app.jaebyoung.maplestorywiki.R
 import app.jaebyoung.maplestorywiki.home.subpage.CharacterSubpage
+import com.bumptech.glide.Glide
 import com.google.firebase.storage.FirebaseStorage
 import java.io.File
 
@@ -55,6 +56,12 @@ class HomeListAdapter(private val context: Context, private val data: ArrayList<
         fun bind(data: HomeListData) {
             val imageRef = storage.getReferenceFromUrl(data.portrait)
             val localFile = File.createTempFile("images", ".png")
+
+//            val tempBitmap =
+//                BitmapFactory.decodeResource(context.resources, R.drawable.do_not_exit)
+//            image.setImageBitmap(tempBitmap)
+
+            Glide.with(context).load(R.drawable.orange_mushroom).into(image)
 
             imageRef.getFile(localFile).addOnSuccessListener {
                 val tempPath = localFile.absolutePath
