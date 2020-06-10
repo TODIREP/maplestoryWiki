@@ -13,6 +13,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".home.CompareJobs"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
             android:name=".home.subpage.skills.SkillDetailContent"
             android:theme="@style/AppTheme.PopupWindow" />
         <activity

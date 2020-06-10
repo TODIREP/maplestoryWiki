@@ -14,13 +14,10 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_character_subpage.*
 import kotlinx.android.synthetic.main.content_character_subpage.*
 
-// TODO : 상세 페이지 구성
-
 class CharacterSubpage : AppCompatActivity(), View.OnClickListener {
     private var currentView: Int = 0
 
     private var basicFragment: Fragment? = null
-    private var skillsFragment: Fragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,7 +60,6 @@ class CharacterSubpage : AppCompatActivity(), View.OnClickListener {
                     sub_view_skills_bar.setBackgroundColor(resources.getColor(R.color.colorPrimary))
                     currentView = 0
                 }
-//                if (basicFragment == null) basicFragment = SubViewBasic()
                 replaceFragment(SubViewBasic())
             }
             R.id.sub_view_skills_layout -> {
@@ -74,7 +70,6 @@ class CharacterSubpage : AppCompatActivity(), View.OnClickListener {
                     sub_view_skills_bar.setBackgroundColor(resources.getColor(R.color.colorSecondary))
                     currentView = 1
                 }
-//                if (skillsFragment == null) skillsFragment = SubViewSkills()
                 replaceFragment(SubViewSkills())
             }
         }
@@ -95,7 +90,7 @@ class CharacterSubpage : AppCompatActivity(), View.OnClickListener {
             R.id.ch_sub_app_settings -> {
                 Log.d("테스트", "앱 설정 열기")
 
-                val data = hashMapOf(
+               /* val data = hashMapOf(
                     "스킬이름" to "더블점프"
                 )
 
@@ -108,7 +103,7 @@ class CharacterSubpage : AppCompatActivity(), View.OnClickListener {
                         Log.d("테스트", "파일 저장 ${it.id}")
                     }.addOnFailureListener {
                         Log.d("테스트", "저장 실패 ${it}")
-                    }
+                    }*/
             }
         }
         return super.onOptionsItemSelected(item)

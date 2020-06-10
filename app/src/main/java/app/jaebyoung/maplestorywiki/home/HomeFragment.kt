@@ -11,7 +11,6 @@ import android.view.animation.AnimationUtils
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
@@ -66,7 +65,6 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
         val view = inflater.inflate(R.layout.fragment_home, container, false)
         firebaseFirestore = FirebaseFirestore.getInstance()
-//        tempData()
 
         loadData()
         makeList(view)
@@ -81,7 +79,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
         fabSlot.setOnClickListener(this)
         fabCard.setOnClickListener(this)
         view.home_search_button.setOnClickListener(this)
-        view.do_not_touch_this.setOnClickListener(this)
+        view.home_compare_jobs.setOnClickListener(this)
 
         makeFilter(view)
 
@@ -98,7 +96,6 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
         filter.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                TODO("Not yet implemented")
             }
 
             override fun onItemSelected(
@@ -113,7 +110,9 @@ class HomeFragment : Fragment(), View.OnClickListener {
                     homeList.clear()
                     when (position) {
                         0 -> {
-                            for (item in saveList) homeList.add(item)
+                            for (item in saveList) {
+                                homeList.add(item)
+                            }
                         }
                         else -> {
                             val keyValue = keyGroup[position]
@@ -137,8 +136,10 @@ class HomeFragment : Fragment(), View.OnClickListener {
         recyclerView.adapter = homeAdapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.setHasFixedSize(false)
+
     }
 
+/*
     private fun tempData() {
         homeList.add(HomeListData("1", "소울마스터", "시그너스", "전사", "275"))
         homeList.add(HomeListData("1", "아란", "영웅", "전사", "275"))
@@ -191,6 +192,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
                 }
         }
     }
+*/
 
     private fun loadData() {
         firebaseFirestore.collection("캐릭터 미리보기")
@@ -214,8 +216,6 @@ class HomeFragment : Fragment(), View.OnClickListener {
             }
     }
 
-    // TODO : 리사이클러뷰 뷰타입 동적 변경
-    // TODO : 그리드 뷰 레이아웃
     override fun onClick(v: View?) {
         val id = v!!.id
 
@@ -267,8 +267,9 @@ class HomeFragment : Fragment(), View.OnClickListener {
                 startActivityForResult(Intent(context, SearchActivity::class.java), homelistsearch)
             }
 
-            R.id.do_not_touch_this -> {
-                homeAdapter.notifyDataSetChanged()
+            R.id.home_compare_jobs -> {
+                val intent = Intent(requireContext(), CompareJobs::class.java)
+                startActivity(intent)
             }
         }
     }
