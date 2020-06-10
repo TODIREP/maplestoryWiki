@@ -39,25 +39,33 @@ class SkillListAdapter(private val context: Context, private val data: ArrayList
         private val maxLevel: TextView = itemView.findViewById(R.id.skills_max_level)
 
         fun bind(data: SkillListData) {
-            if (data.skillIcon != "1") {
-                val imageRef = storage.getReferenceFromUrl(data.skillIcon)
-                val localFile = File.createTempFile("images", ".png")
+            val imageRef = storage.getReferenceFromUrl(data.skillIcon)
+            val iconPath: String? = data.getIconPath()
 
+            if (iconPath == null) {
+                val localFile = File.createTempFile("images", ".png")
                 val tempSkillIcon =
                     BitmapFactory.decodeResource(context.resources, R.drawable.maple_icon_image)
                 icons.setImageBitmap(tempSkillIcon)
+                name.text = "스킬 이름 : ???"
+                maxLevel.text = "최고 레벨 : ???"
 
                 imageRef.getFile(localFile).addOnSuccessListener {
                     val tempPath = localFile.absolutePath
+                    data.setIconPath(tempPath)
                     val bitmap = BitmapFactory.decodeFile(tempPath)
                     icons.setImageBitmap(bitmap)
-                    Log.d("테스트", "${data.skillName} 이미지")
+                    name.text = data.skillName
+                    maxLevel.setText("최고 레벨 : ${data.maxLevel}")
                 }.addOnFailureListener {
                     Log.d("테스트", "${data.skillIcon} 실패맨")
                 }
+            } else {
+                val bitmap = BitmapFactory.decodeFile(iconPath)
+                icons.setImageBitmap(bitmap)
+                name.text = data.skillName
+                maxLevel.setText("최고 레벨 : ${data.maxLevel}")
             }
-            name.text = data.skillName
-            maxLevel.setText("최고 레벨 : ${data.maxLevel}")
 
             itemView.setOnClickListener {
                 val intent = Intent(context, SkillDetailContent::class.java)

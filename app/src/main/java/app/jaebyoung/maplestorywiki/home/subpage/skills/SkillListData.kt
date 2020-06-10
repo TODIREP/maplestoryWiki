@@ -9,4 +9,14 @@ class SkillListData(
     val skillContent: String,
     val skillEffect: String,
     val skillClass: String
-) : Serializable
+) : Serializable {
+    private var skillIconPath: String? = null
+
+    fun setIconPath(path: String) {
+        this.skillIconPath = path
+    }
+
+    fun getIconPath(): String? {
+        return skillIconPath
+    }
+}

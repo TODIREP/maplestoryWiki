@@ -16,13 +16,17 @@ import com.bumptech.glide.Glide
 import com.google.firebase.storage.FirebaseStorage
 import java.io.File
 
-class HomeListAdapter(private val context: Context, private val data: ArrayList<HomeListData>) :
+class HomeListAdapter(
+    private val context: Context,
+    private val mViewType: Int,
+    private val data: ArrayList<HomeListData>
+) :
     RecyclerView.Adapter<HomeListAdapter.Holder>() {
-    private var mViewType: Int = 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val layout = when (mViewType) {
             0 -> R.layout.home_recycler_item_list_type
+            1 -> R.layout.home_recycler_item_slot_type
             2 -> R.layout.home_recycler_item_card_type
             else -> R.layout.home_recycler_item_list_type
         }
@@ -33,10 +37,6 @@ class HomeListAdapter(private val context: Context, private val data: ArrayList<
 
     override fun getItemViewType(position: Int): Int {
         return mViewType
-    }
-
-    fun setItemViewType(viewType: Int) {
-        this.mViewType = viewType
     }
 
     override fun getItemCount(): Int {
@@ -55,24 +55,30 @@ class HomeListAdapter(private val context: Context, private val data: ArrayList<
 
         fun bind(data: HomeListData) {
             val imageRef = storage.getReferenceFromUrl(data.portrait)
-            val localFile = File.createTempFile("images", ".png")
+            val imgPath: String? = data.getPortraitPath()
 
-//            val tempBitmap =
-//                BitmapFactory.decodeResource(context.resources, R.drawable.do_not_exit)
-//            image.setImageBitmap(tempBitmap)
+            if (imgPath == null) {
+                val localFile = File.createTempFile("images", ".png")
+                Glide.with(context).load(R.drawable.orange_mushroom).into(image)
+                name.text = "직업 이름 : ???"
+                type.text = "직업군 : ???"
 
-            Glide.with(context).load(R.drawable.orange_mushroom).into(image)
-
-            imageRef.getFile(localFile).addOnSuccessListener {
-                val tempPath = localFile.absolutePath
-                data.setPortraitPath(tempPath)
-                val bitmap = BitmapFactory.decodeFile(tempPath)
+                imageRef.getFile(localFile).addOnSuccessListener {
+                    val tempPath = localFile.absolutePath
+                    data.setPortraitPath(tempPath)
+                    val bitmap = BitmapFactory.decodeFile(tempPath)
+                    image.setImageBitmap(bitmap)
+                    name.text = data.jopName
+                    type.text = data.jopType
+                }.addOnFailureListener {
+                    Log.d("테스트", "${data.portrait} 실패맨")
+                }
+            } else {
+                val bitmap = BitmapFactory.decodeFile(imgPath)
                 image.setImageBitmap(bitmap)
-            }.addOnFailureListener {
-                Log.d("테스트", "${data.portrait} 실패맨")
+                name.text = data.jopName
+                type.text = data.jopType
             }
-            name.text = data.jopName
-            type.text = data.jopType
 
             itemView.setOnClickListener {
                 Log.d("테스트", "${data.jopName} 클릭함")

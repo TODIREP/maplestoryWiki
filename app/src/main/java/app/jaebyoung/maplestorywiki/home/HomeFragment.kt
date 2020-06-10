@@ -14,6 +14,7 @@ import android.widget.Spinner
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import app.jaebyoung.maplestorywiki.R
@@ -131,7 +132,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
     private fun makeList(view: View) {
         recyclerView = view.findViewById(R.id.home_items_recycler)
-        homeAdapter = HomeListAdapter(requireContext(), homeList)
+        homeAdapter = HomeListAdapter(requireContext(), 0, homeList)
 
         recyclerView.adapter = homeAdapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -226,36 +227,47 @@ class HomeFragment : Fragment(), View.OnClickListener {
             R.id.view_list_layer -> {
                 floatingButton()
                 if (currentLayout != 0) {
-/*
+                    homeAdapter = HomeListAdapter(requireContext(), 0, homeList)
+
+                    recyclerView.adapter = homeAdapter
                     recyclerView.layoutManager =
                         LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-                    homeAdapter.notifyDataSetChanged()
-*/
+                    recyclerView.setHasFixedSize(false)
+                    currentLayout = 0
                 }
             }
 
             R.id.view_slot_layer -> {
                 floatingButton()
                 if (currentLayout != 1) {
+                    homeAdapter = HomeListAdapter(requireContext(), 1, homeList)
 
+                    recyclerView.adapter = homeAdapter
+                    recyclerView.layoutManager =
+                        GridLayoutManager(requireContext(), 2)
+                    recyclerView.setHasFixedSize(false)
+                    currentLayout = 1
                 }
             }
 
             R.id.view_card_layer -> {
                 floatingButton()
                 if (currentLayout != 2) {
-/*
+                    homeAdapter = HomeListAdapter(requireContext(), 2, homeList)
+
+                    recyclerView.adapter = homeAdapter
                     recyclerView.layoutManager =
                         LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-                    homeAdapter.notifyDataSetChanged()
-*/
+                    recyclerView.setHasFixedSize(false)
+                    currentLayout = 2
                 }
             }
+
             R.id.home_search_button -> {
                 startActivityForResult(Intent(context, SearchActivity::class.java), homelistsearch)
             }
+
             R.id.do_not_touch_this -> {
-//                Toast.makeText(requireContext(), "새로고침!", Toast.LENGTH_SHORT).show()
                 homeAdapter.notifyDataSetChanged()
             }
         }

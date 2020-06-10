@@ -9,13 +9,13 @@ class HomeListData(
     val jopGroup: String,
     val jopLevel: String
 ) : Serializable {
-    private lateinit var portraitPath: String
+    private var portraitPath: String? = null
 
     fun setPortraitPath(imgPath: String) {
         this.portraitPath = imgPath
     }
 
-    fun getPortraitPath(): String {
+    fun getPortraitPath(): String? {
         return portraitPath
     }
 }
