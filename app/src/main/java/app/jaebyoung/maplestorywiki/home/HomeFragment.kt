@@ -1,5 +1,6 @@
 package app.jaebyoung.maplestorywiki.home
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -18,8 +19,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import app.jaebyoung.maplestorywiki.R
 import app.jaebyoung.maplestorywiki.SearchActivity
+import app.jaebyoung.maplestorywiki.home.compare.CompareJobs
 import app.jaebyoung.maplestorywiki.home.list.HomeListAdapter
 import app.jaebyoung.maplestorywiki.home.list.HomeListData
+import app.jaebyoung.maplestorywiki.home.subpage.CharacterSubpage
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_home.view.*
@@ -138,68 +141,12 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
     }
 
-/*
-    private fun tempData() {
-        homeList.add(HomeListData("1", "소울마스터", "시그너스", "전사", "275"))
-        homeList.add(HomeListData("1", "아란", "영웅", "전사", "275"))
-        homeList.add(HomeListData("1", "히어로", "모험가", "전사", "275"))
-        homeList.add(HomeListData("1", "팔라딘", "모험가", "전사", "275"))
-        homeList.add(HomeListData("1", "다크나이트", "모험가", "전사", "275"))
-
-        homeList.add(HomeListData("1", "에반", "영웅", "마법사", "275"))
-        homeList.add(HomeListData("1", "플레임위자드", "시그너스", "마법사", "275"))
-        homeList.add(HomeListData("1", "루미너스", "영웅", "마법사", "275"))
-        homeList.add(HomeListData("1", "아크메이지(불,독)", "모험가", "마법사", "275"))
-        homeList.add(HomeListData("1", "아크메이지(썬,콜)", "모험가", "마법사", "275"))
-        homeList.add(HomeListData("1", "비숍", "모험가", "마법사", "275"))
-
-        homeList.add(HomeListData("1", "메르세데스", "영웅", "궁수", "275"))
-        homeList.add(HomeListData("1", "윈드브레이커", "시그너스", "궁수", "275"))
-        homeList.add(HomeListData("1", "보우마스터", "모험가", "궁수", "275"))
-        homeList.add(HomeListData("1", "신궁", "모험가", "궁수", "275"))
-        homeList.add(HomeListData("1", "패스파인더", "모험가", "궁수", "275"))
-
-        homeList.add(HomeListData("1", "팬텀", "영웅", "도적", "275"))
-        homeList.add(HomeListData("1", "나이트워커", "시그너스", "도적", "275"))
-        homeList.add(HomeListData("1", "나이트로드", "모험가", "도적", "275"))
-        homeList.add(HomeListData("1", "섀도어", "모험가", "도적", "275"))
-        homeList.add(HomeListData("1", "듀얼블레이드", "모험가", "도적", "275"))
-
-        homeList.add(HomeListData("1", "은월", "영웅", "해적", "275"))
-        homeList.add(HomeListData("1", "스트라이커", "시그너스", "해적", "275"))
-        homeList.add(HomeListData("1", "캡틴", "모험가", "해적", "275"))
-        homeList.add(HomeListData("1", "바이퍼", "모험가", "해적", "275"))
-        homeList.add(HomeListData("1", "캐논슈터", "모험가", "해적", "275"))
-
-        for (target in homeList) {
-            val stringImage = "${firestorePath}/${target.jopName} 초상화.png"
-
-            val data = hashMapOf(
-                "jop_portrait" to stringImage,
-                "jop_name" to target.jopName,
-                "jop_type" to target.jopType,
-                "jop_group" to target.jopGroup,
-                "jop_level" to target.jopLevel
-            )
-
-            firebaseFirestore.collection("캐릭터 미리보기")
-                .add(data)
-                .addOnSuccessListener {
-                    Log.d("테스트", "파일 저장 ${it.id}")
-                }.addOnFailureListener {
-                    Log.d("테스트", "저장 실패 ${it}")
-                }
-        }
-    }
-*/
-
     private fun loadData() {
         firebaseFirestore.collection("캐릭터 미리보기")
             .get()
             .addOnSuccessListener { result ->
                 for (document in result) {
                     val data = document.data
-                    Log.d("테스트", "${data}")
                     val portrait = data.get("jop_portrait").toString()
                     val jopName = data.get("jop_name").toString()
                     val jopType = data.get("jop_type").toString()
@@ -269,6 +216,28 @@ class HomeFragment : Fragment(), View.OnClickListener {
             R.id.home_compare_jobs -> {
                 val intent = Intent(requireContext(), CompareJobs::class.java)
                 startActivity(intent)
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                homelistsearch -> {
+                    if (data != null) {
+                        val search_jop = data.getStringExtra("search_result")
+                        Log.d("테스트", "${search_jop}을(를) 검색합니다.")
+                        for (target in saveList) {
+                            if (target.jopName == search_jop) {
+                                val intent = Intent(context, CharacterSubpage::class.java)
+                                intent.putExtra("data", target)
+                                startActivity(intent)
+                            }
+                        }
+                    }
+                }
             }
         }
     }

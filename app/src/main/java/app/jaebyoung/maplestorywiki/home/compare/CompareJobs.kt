@@ -1,36 +1,28 @@
-package app.jaebyoung.maplestorywiki.home
+package app.jaebyoung.maplestorywiki.home.compare
 
-import android.content.Context
-import android.graphics.BitmapFactory
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.view.KeyEvent
 import android.view.MenuItem
 import android.view.View
-import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import app.jaebyoung.maplestorywiki.R
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.storage.FirebaseStorage
+import app.jaebyoung.maplestorywiki.home.list.HomeListAdapter
+import app.jaebyoung.maplestorywiki.home.list.HomeListData
 import kotlinx.android.synthetic.main.activity_compare_jobs.*
-import kotlinx.android.synthetic.main.content_compare_data.*
-import kotlinx.android.synthetic.main.fragment_sub_view_basic.*
-import java.io.File
 
 // TODO : 공사 필요함.
 class CompareJobs : AppCompatActivity(), View.OnClickListener {
-    private lateinit var keyboardManager: InputMethodManager
-    private val db = FirebaseFirestore.getInstance()
-    private val storage = FirebaseStorage.getInstance()
-    private lateinit var jobA: String
-    private lateinit var jobB: String
+    //    private lateinit var keyboardManager: InputMethodManager
+//    private val db = FirebaseFirestore.getInstance()
+//    private val storage = FirebaseStorage.getInstance()
+//    private lateinit var jobA: String
+//    private lateinit var jobB: String
     private var isjobA: Boolean = false
     private var isjobB: Boolean = false
+    private val INSERT_JOP_A = 8120
+    private val INSERT_JOP_B = 8121
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,13 +30,15 @@ class CompareJobs : AppCompatActivity(), View.OnClickListener {
 
         val toolbar: Toolbar = findViewById(R.id.compare_jobs_toolbar)
         setSupportActionBar(toolbar)
-        setInputManager()
+//        setInputManager()
 
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.setHomeAsUpIndicator(R.drawable.ic_cancel_back_button_white_36dp)
 
         check_job_btn.setOnClickListener(this)
         bottom_button_layer.setOnClickListener(this)
+        insert_job_a.setOnClickListener(this)
+        insert_job_b.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
@@ -52,7 +46,6 @@ class CompareJobs : AppCompatActivity(), View.OnClickListener {
 
         when (id) {
             R.id.check_job_btn -> {
-                Log.d("테스트", "${jobA} VS ${jobB}")
                 if (isjobA && isjobB) {
                     bottom_button_layer.setBackgroundColor(resources.getColor(R.color.colorPrimary))
                 }
@@ -60,6 +53,14 @@ class CompareJobs : AppCompatActivity(), View.OnClickListener {
             R.id.bottom_button_layer -> {
                 compare_jobs_select.visibility = View.GONE
                 compare_data_scrollview.visibility = View.VISIBLE
+            }
+            R.id.insert_job_a -> {
+                val intent = Intent(this, SearchForCompare::class.java)
+                startActivityForResult(intent, INSERT_JOP_A)
+            }
+            R.id.insert_job_b -> {
+                val intent = Intent(this, SearchForCompare::class.java)
+                startActivityForResult(intent, INSERT_JOP_B)
             }
         }
     }
@@ -75,6 +76,26 @@ class CompareJobs : AppCompatActivity(), View.OnClickListener {
         return super.onOptionsItemSelected(item)
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                INSERT_JOP_A -> {
+                    if (!isjobA) {
+                        isjobA = true
+                    }
+                }
+                INSERT_JOP_B -> {
+                    if (!isjobB) {
+                        isjobB = true
+                    }
+                }
+            }
+        }
+    }
+
+/*
     private fun setInputManager() {
         keyboardManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         val inputA: EditText = findViewById(R.id.insert_job_a)
@@ -88,8 +109,6 @@ class CompareJobs : AppCompatActivity(), View.OnClickListener {
                     db.collection("캐릭터 미리보기").whereEqualTo("jop_name", jobA)
                         .get().addOnSuccessListener {
                             for (result in it) {
-                                Log.d("테스트", "${result.data}")
-
                                 val imageA = findViewById<ImageView>(R.id.job_image_a)
                                 val imageRef = storage.getReferenceFromUrl(
                                     result.data.get("jop_portrait").toString()
@@ -100,7 +119,7 @@ class CompareJobs : AppCompatActivity(), View.OnClickListener {
                                     val bitmap = BitmapFactory.decodeFile(tempPath)
                                     imageA.setImageBitmap(bitmap)
                                 }.addOnFailureListener {
-                                    Log.d("테스트", "실패aaaaaaaaaaaa")
+                                    Log.d("테스트", "로딩 실패")
                                 }
                             }
                             isjobA = true
@@ -110,7 +129,6 @@ class CompareJobs : AppCompatActivity(), View.OnClickListener {
                                 .get()
                                 .addOnSuccessListener { result ->
                                     if (result != null) {
-                                        Log.d("테스트", "${result.data}")
                                         val data = result.data!!
 
                                         compare_basic_status_a.text =
@@ -143,8 +161,6 @@ class CompareJobs : AppCompatActivity(), View.OnClickListener {
                     db.collection("캐릭터 미리보기").whereEqualTo("jop_name", jobB)
                         .get().addOnSuccessListener {
                             for (result in it) {
-                                Log.d("테스트", "${result.data}")
-
                                 val imageB = findViewById<ImageView>(R.id.job_image_b)
                                 val imageRef = storage.getReferenceFromUrl(
                                     result.data.get("jop_portrait").toString()
@@ -155,7 +171,7 @@ class CompareJobs : AppCompatActivity(), View.OnClickListener {
                                     val bitmap = BitmapFactory.decodeFile(tempPath)
                                     imageB.setImageBitmap(bitmap)
                                 }.addOnFailureListener {
-                                    Log.d("테스트", "실패bbbbbbbbbbbbbbbbb")
+                                    Log.d("테스트", "실패")
                                 }
                             }
                             isjobB = true
@@ -165,7 +181,6 @@ class CompareJobs : AppCompatActivity(), View.OnClickListener {
                                 .get()
                                 .addOnSuccessListener { result ->
                                     if (result != null) {
-                                        Log.d("테스트", "${result.data}")
                                         val data = result.data!!
 
                                         compare_basic_status_b.text =
@@ -190,4 +205,5 @@ class CompareJobs : AppCompatActivity(), View.OnClickListener {
             }
         })
     }
+*/
 }

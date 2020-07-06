@@ -40,7 +40,6 @@ class SubViewSkills : Fragment(), View.OnClickListener {
             val bundle = arguments
             jopName = bundle!!.getString("jop_name")!!
             jopType = bundle.getString("jop_type")!!
-            Log.d("테스트", jopName + " ㅇㅇㅇㅇㅇㅇ")
         }
         loadData()
         makeSkillList(view)

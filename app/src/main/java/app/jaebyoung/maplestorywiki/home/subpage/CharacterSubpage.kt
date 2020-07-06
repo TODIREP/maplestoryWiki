@@ -10,15 +10,19 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import app.jaebyoung.maplestorywiki.R
 import app.jaebyoung.maplestorywiki.home.list.HomeListData
+import com.bumptech.glide.Glide
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_character_subpage.*
 import kotlinx.android.synthetic.main.content_character_subpage.*
+import java.io.File
 
 class CharacterSubpage : AppCompatActivity(), View.OnClickListener {
     private var currentView: Int = 0
     private lateinit var jopName: String
     private lateinit var jopType: String
     private var basicFragment: Fragment? = null
+    private val storage = FirebaseStorage.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,12 +34,30 @@ class CharacterSubpage : AppCompatActivity(), View.OnClickListener {
 
         val intent = getIntent()
         val data: HomeListData = intent.getSerializableExtra("data") as HomeListData
-        val bitmap = BitmapFactory.decodeFile(data.getPortraitPath())
+
+        val bitmapImage = data.getPortraitPath()
+        if (bitmapImage == null) {
+            val imageRef = storage.getReferenceFromUrl(data.portrait)
+            val localFile = File.createTempFile("images", ".png")
+
+            Glide.with(this).load(R.drawable.orange_mushroom).into(ch_sub_toolbar_image)
+
+            imageRef.getFile(localFile).addOnSuccessListener {
+                val tempPath = localFile.absolutePath
+                data.setPortraitPath(tempPath)
+
+                val bitmap = BitmapFactory.decodeFile(tempPath)
+                ch_sub_toolbar_image.setImageBitmap(bitmap)
+            }.addOnFailureListener {
+                Log.d("테스트", "${data.portrait} 실패맨")
+            }
+        } else {
+            val bitmap = BitmapFactory.decodeFile(bitmapImage)
+            ch_sub_toolbar_image.setImageBitmap(bitmap)
+        }
+
         jopName = data.jopName
         jopType = data.jopType
-        Log.d("테스트", jopName)
-
-        ch_sub_toolbar_image.setImageBitmap(bitmap)
         ch_sub_toolbar.title = jopName
 
         sub_view_basic_layout.setOnClickListener(this)

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".home.CompareJobs">
+    tools:context=".home.compare.CompareJobs">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/compare_jobs_appbar"
@@ -29,14 +29,13 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/compare_jobs_appbar">
 
-        <EditText
+        <TextView
             android:id="@+id/insert_job_a"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="15dp"
             android:background="@drawable/primary_rectangle_with_corner"
-            android:inputType="text"
             android:padding="10dp"
             android:textColor="@color/colorSecondary"
             app:layout_constraintBottom_toTopOf="@+id/bottom_button_layer"
@@ -56,14 +55,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/insert_job_a" />
 
-        <EditText
+        <TextView
             android:id="@+id/insert_job_b"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginStart="15dp"
             android:layout_marginEnd="10dp"
             android:background="@drawable/primary_rectangle_with_corner"
-            android:inputType="text"
             android:padding="10dp"
             android:textColor="@color/colorSecondary"
             app:layout_constraintBottom_toTopOf="@+id/bottom_button_layer"

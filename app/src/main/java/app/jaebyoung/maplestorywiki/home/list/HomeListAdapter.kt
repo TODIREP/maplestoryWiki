@@ -81,7 +81,6 @@ class HomeListAdapter(
             }
 
             itemView.setOnClickListener {
-                Log.d("테스트", "${data.jopName} 클릭함")
                 val intent = Intent(context, CharacterSubpage::class.java)
                 intent.putExtra("data", data)
                 context.startActivity(intent)

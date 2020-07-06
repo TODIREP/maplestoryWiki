@@ -24,7 +24,6 @@ class SubViewBasic : Fragment() {
             .get()
             .addOnSuccessListener { result ->
                 if (result != null) {
-                    Log.d("테스트", "${result.data}")
                     val data = result.data!!
 
                     stat_main_weapon.text = "주무기 : ${data.get("mainWeapon")}"
