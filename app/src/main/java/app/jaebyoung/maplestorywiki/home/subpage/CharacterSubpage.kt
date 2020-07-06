@@ -17,6 +17,7 @@ import kotlinx.android.synthetic.main.content_character_subpage.*
 class CharacterSubpage : AppCompatActivity(), View.OnClickListener {
     private var currentView: Int = 0
     private lateinit var jopName: String
+    private lateinit var jopType: String
     private var basicFragment: Fragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,6 +32,7 @@ class CharacterSubpage : AppCompatActivity(), View.OnClickListener {
         val data: HomeListData = intent.getSerializableExtra("data") as HomeListData
         val bitmap = BitmapFactory.decodeFile(data.getPortraitPath())
         jopName = data.jopName
+        jopType = data.jopType
         Log.d("테스트", jopName)
 
         ch_sub_toolbar_image.setImageBitmap(bitmap)
@@ -65,6 +67,8 @@ class CharacterSubpage : AppCompatActivity(), View.OnClickListener {
                 val fragment = SubViewBasic()
                 val bundle = Bundle()
                 bundle.putString("jop_name", jopName)
+                bundle.putString("jop_type", jopType)
+                fragment.arguments = bundle
 
                 replaceFragment(fragment)
             }
@@ -79,6 +83,8 @@ class CharacterSubpage : AppCompatActivity(), View.OnClickListener {
                 val fragment = SubViewSkills()
                 val bundle = Bundle()
                 bundle.putString("jop_name", jopName)
+                bundle.putString("jop_type", jopType)
+                fragment.arguments = bundle
 
                 replaceFragment(fragment)
             }

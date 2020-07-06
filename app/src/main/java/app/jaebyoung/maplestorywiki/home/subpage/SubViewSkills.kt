@@ -21,6 +21,8 @@ class SubViewSkills : Fragment(), View.OnClickListener {
     private lateinit var skillsAdapter: RecyclerView.Adapter<SkillListAdapter.Holder>
     private var skillList = arrayListOf<SkillListData>()
     private lateinit var jopName: String
+    private lateinit var jopType: String
+
     private var skillList0 = arrayListOf<SkillListData>()
     private var skillList1 = arrayListOf<SkillListData>()
     private var skillList2 = arrayListOf<SkillListData>()
@@ -34,11 +36,13 @@ class SubViewSkills : Fragment(), View.OnClickListener {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_sub_view_skills, container, false)
-        if (savedInstanceState != null) {
-            jopName = savedInstanceState.getString("jop_name")!!
-            Log.d("테스트", jopName)
-            loadData()
+        if (arguments != null) {
+            val bundle = arguments
+            jopName = bundle!!.getString("jop_name")!!
+            jopType = bundle.getString("jop_type")!!
+            Log.d("테스트", jopName + " ㅇㅇㅇㅇㅇㅇ")
         }
+        loadData()
         makeSkillList(view)
         view.skills_level_0.setOnClickListener(this)
         view.skills_level_1.setOnClickListener(this)
@@ -54,6 +58,42 @@ class SubViewSkills : Fragment(), View.OnClickListener {
 
     private fun loadData() {
         val storage = FirebaseFirestore.getInstance()
+        var basic_jop = "없음"
+        when (jopType) {
+            "시그너스" -> {
+                basic_jop = "시그너스 기사단"
+            }
+            "레지스탕스" -> {
+                basic_jop = "레지스탕스(메이플스토리)"
+            }
+            "모험가" -> {
+                basic_jop = "초보자"
+            }
+        }
+
+        if (basic_jop != "없음") {
+            storage.collection("캐릭터").document(basic_jop).collection("0차스킬")
+                .get().addOnSuccessListener { result ->
+                    for (document in result) {
+                        val data = document.data
+                        skillList0.add(
+                            SkillListData(
+                                data.get("skillIconImage").toString(),
+                                data.get("skillName").toString(),
+                                data.get("maxLevel").toString(),
+                                data.get("skillContent").toString(),
+                                data.get("skillEffect").toString(),
+                                data.get("skillClass").toString()
+                            )
+                        )
+                    }
+                    skillList.clear()
+                    for (item in skillList0) {
+                        skillList.add(item)
+                    }
+                    skillsAdapter.notifyDataSetChanged()
+                }
+        }
 
         storage.collection("캐릭터").document(jopName).collection("0차스킬")
             .get().addOnSuccessListener { result ->
