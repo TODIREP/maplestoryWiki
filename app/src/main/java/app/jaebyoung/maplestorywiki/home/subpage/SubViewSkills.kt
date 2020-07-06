@@ -20,7 +20,7 @@ class SubViewSkills : Fragment(), View.OnClickListener {
     private lateinit var skillsView: RecyclerView
     private lateinit var skillsAdapter: RecyclerView.Adapter<SkillListAdapter.Holder>
     private var skillList = arrayListOf<SkillListData>()
-
+    private lateinit var jopName: String
     private var skillList0 = arrayListOf<SkillListData>()
     private var skillList1 = arrayListOf<SkillListData>()
     private var skillList2 = arrayListOf<SkillListData>()
@@ -34,9 +34,11 @@ class SubViewSkills : Fragment(), View.OnClickListener {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_sub_view_skills, container, false)
-
-        loadData()
-//        tempData()
+        if (savedInstanceState != null) {
+            jopName = savedInstanceState.getString("jop_name")!!
+            Log.d("테스트", jopName)
+            loadData()
+        }
         makeSkillList(view)
         view.skills_level_0.setOnClickListener(this)
         view.skills_level_1.setOnClickListener(this)
@@ -44,7 +46,6 @@ class SubViewSkills : Fragment(), View.OnClickListener {
         view.skills_level_3.setOnClickListener(this)
         view.skills_level_4.setOnClickListener(this)
         view.skills_level_5.setOnClickListener(this)
-
         view.update_button.setOnClickListener(this)
         view.download_button.setOnClickListener(this)
 
@@ -52,7 +53,6 @@ class SubViewSkills : Fragment(), View.OnClickListener {
     }
 
     private fun loadData() {
-        val jopName = "윈드브레이커"
         val storage = FirebaseFirestore.getInstance()
 
         storage.collection("캐릭터").document(jopName).collection("0차스킬")
@@ -162,12 +162,6 @@ class SubViewSkills : Fragment(), View.OnClickListener {
         val id = v!!.id
         var targetList = arrayListOf<SkillListData>()
         when (id) {
-            /*R.id.update_button -> {
-                updateClassThing()
-            }
-            R.id.download_button -> {
-                downLoad()
-            }*/
             R.id.skills_level_0 -> {
                 if (currentSkill != 0) {
                     currentSkill = 0
@@ -255,87 +249,4 @@ class SubViewSkills : Fragment(), View.OnClickListener {
         skillsView.layoutManager = LinearLayoutManager(requireContext())
         skillsView.setHasFixedSize(false)
     }
-
-/*    private fun updateClassThing() {
-        val firestorePath = "gs://maplestory-wiki.appspot.com"
-        val jopName = "윈드브레이커"
-        val storage = FirebaseFirestore.getInstance()
-        val tempList = arrayListOf<SkillListData>()
-
-        tempList.add(
-            SkillListData(
-                "1",
-                "",
-                "",
-                "",
-                "",
-                ""
-            )
-        )
-
-        for (target in tempList) {
-            val skillClass = "${target.skillClass}스킬"
-            val skillIconImage = "${firestorePath}/${jopName}/${target.skillName}.png"
-            val data = hashMapOf(
-                "skillIconImage" to skillIconImage,
-                "skillName" to target.skillName,
-                "maxLevel" to target.maxLevel,
-                "skillContent" to target.skillContent,
-                "skillEffect" to target.skillEffect,
-                "skillClass" to target.skillClass
-            )
-
-            storage.collection("캐릭터")
-                .document(jopName)
-                .collection(skillClass)
-                .add(data)
-                .addOnSuccessListener {
-                    Log.d("테스트", "파일 저장 ${it.id}")
-                }.addOnFailureListener {
-                    Log.d("테스트", "저장 실패 ${it}")
-                }
-        }
-    }
-
-    private fun downLoad() {
-        val jopName = "팬텀"
-        val storage = FirebaseFirestore.getInstance()
-
-        storage.collection("캐릭터").document(jopName).collection("0차스킬")
-            .get().addOnSuccessListener { result ->
-                for (document in result) {
-                    Log.d("테스트", "${document.data}")
-                }
-            }
-        storage.collection("캐릭터").document(jopName).collection("1차스킬")
-            .get().addOnSuccessListener { result ->
-                for (document in result) {
-                    Log.d("테스트", "${document.data}")
-                }
-            }
-        storage.collection("캐릭터").document(jopName).collection("2차스킬")
-            .get().addOnSuccessListener { result ->
-                for (document in result) {
-                    Log.d("테스트", "${document.data}")
-                }
-            }
-        storage.collection("캐릭터").document(jopName).collection("3차스킬")
-            .get().addOnSuccessListener { result ->
-                for (document in result) {
-                    Log.d("테스트", "${document.data}")
-                }
-            }
-        storage.collection("캐릭터").document(jopName).collection("4차스킬")
-            .get().addOnSuccessListener { result ->
-                for (document in result) {
-                    Log.d("테스트", "${document.data}")
-                }
-            }
-        storage.collection("캐릭터").document(jopName).collection("5차스킬")
-            .get().addOnSuccessListener { result ->
-                for (document in result) {
-                    Log.d("테스트", "${document.data}")
-                }
-            }
-    }*/
 }

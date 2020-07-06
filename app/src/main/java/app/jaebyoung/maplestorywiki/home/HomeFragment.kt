@@ -38,7 +38,6 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
     private var currentLayout: Int = 0
 
-    // 0 : 리스트, 1: 그리드, 2: 카드
     private lateinit var recyclerView: RecyclerView
     private lateinit var homeAdapter: RecyclerView.Adapter<HomeListAdapter.Holder>
     private var homeList = arrayListOf<HomeListData>()

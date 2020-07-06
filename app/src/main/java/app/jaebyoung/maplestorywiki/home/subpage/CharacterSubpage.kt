@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.content_character_subpage.*
 
 class CharacterSubpage : AppCompatActivity(), View.OnClickListener {
     private var currentView: Int = 0
-
+    private lateinit var jopName: String
     private var basicFragment: Fragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,9 +30,11 @@ class CharacterSubpage : AppCompatActivity(), View.OnClickListener {
         val intent = getIntent()
         val data: HomeListData = intent.getSerializableExtra("data") as HomeListData
         val bitmap = BitmapFactory.decodeFile(data.getPortraitPath())
+        jopName = data.jopName
+        Log.d("테스트", jopName)
 
         ch_sub_toolbar_image.setImageBitmap(bitmap)
-        ch_sub_toolbar.title = data.jopName
+        ch_sub_toolbar.title = jopName
 
         sub_view_basic_layout.setOnClickListener(this)
         sub_view_skills_layout.setOnClickListener(this)
@@ -60,7 +62,11 @@ class CharacterSubpage : AppCompatActivity(), View.OnClickListener {
                     sub_view_skills_bar.setBackgroundColor(resources.getColor(R.color.colorPrimary))
                     currentView = 0
                 }
-                replaceFragment(SubViewBasic())
+                val fragment = SubViewBasic()
+                val bundle = Bundle()
+                bundle.putString("jop_name", jopName)
+
+                replaceFragment(fragment)
             }
             R.id.sub_view_skills_layout -> {
                 if (currentView != 1) {
@@ -70,7 +76,11 @@ class CharacterSubpage : AppCompatActivity(), View.OnClickListener {
                     sub_view_skills_bar.setBackgroundColor(resources.getColor(R.color.colorSecondary))
                     currentView = 1
                 }
-                replaceFragment(SubViewSkills())
+                val fragment = SubViewSkills()
+                val bundle = Bundle()
+                bundle.putString("jop_name", jopName)
+
+                replaceFragment(fragment)
             }
         }
     }
@@ -89,21 +99,6 @@ class CharacterSubpage : AppCompatActivity(), View.OnClickListener {
             }
             R.id.ch_sub_app_settings -> {
                 Log.d("테스트", "앱 설정 열기")
-
-               /* val data = hashMapOf(
-                    "스킬이름" to "더블점프"
-                )
-
-                val storage = FirebaseFirestore.getInstance()
-                storage.collection("캐릭터")
-                    .document("스트라이커")
-                    .collection("1차스킬")
-                    .add(data)
-                    .addOnSuccessListener {
-                        Log.d("테스트", "파일 저장 ${it.id}")
-                    }.addOnFailureListener {
-                        Log.d("테스트", "저장 실패 ${it}")
-                    }*/
             }
         }
         return super.onOptionsItemSelected(item)

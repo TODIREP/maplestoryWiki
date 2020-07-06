@@ -22,6 +22,7 @@ import kotlinx.android.synthetic.main.content_compare_data.*
 import kotlinx.android.synthetic.main.fragment_sub_view_basic.*
 import java.io.File
 
+// TODO : 공사 필요함.
 class CompareJobs : AppCompatActivity(), View.OnClickListener {
     private lateinit var keyboardManager: InputMethodManager
     private val db = FirebaseFirestore.getInstance()
