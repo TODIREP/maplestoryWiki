@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    tools:context=".SplashActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#30ffffff">
+
+        <ImageView
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:src="@drawable/maple_story"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/splash_slime"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/splash_info"
+        app:layout_constraintEnd_toStartOf="@id/splash_mushroom"
+        app:layout_constraintStart_toStartOf="@+id/splash_info" />
+
+    <ImageView
+        android:id="@+id/splash_mushroom"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/splash_info"
+        app:layout_constraintEnd_toEndOf="@+id/splash_info"
+        app:layout_constraintStart_toEndOf="@id/splash_slime" />
+
+    <TextView
+        android:id="@+id/splash_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="45dp"
+        android:background="#10ffffff"
+        android:text="메이플 위키 앱은 넥슨 및 메이플스토리와 어떠한 연관성도 없으며,\n 모든 정보는 나무위키를 기반으로 제작되었음을 알립니다."
+        android:textAlignment="center"
+        android:textColor="@color/colorSecondaryDark"
+        android:textSize="12dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
