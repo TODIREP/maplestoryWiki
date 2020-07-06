@@ -12,6 +12,8 @@ import app.jaebyoung.maplestorywiki.home.list.HomeListData
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_search_for_compare.*
 
+// TODO : 검색 로그 기록, 카테고리 선택 형식의 탐색 기능
+
 class SearchForCompare : AppCompatActivity() {
     private lateinit var firebaseFirestore: FirebaseFirestore
     private var jopData = arrayListOf<HomeListData>()

@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import app.jaebyoung.maplestorywiki.R
 import kotlinx.android.synthetic.main.fragment_ranking.view.*
 
+// TODO : 공식 홈페이지, maple.gg 크롤링하기
 class RankingFragment : Fragment() {
 
     override fun onCreateView(

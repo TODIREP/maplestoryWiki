@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import app.jaebyoung.maplestorywiki.R
 import kotlinx.android.synthetic.main.fragment_community.view.*
 
+// TODO : 커뮤니티 서버 구축
 class CommunityFragment : Fragment() {
 
     override fun onCreateView(

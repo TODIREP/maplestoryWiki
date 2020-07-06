@@ -14,6 +14,7 @@ import app.jaebyoung.maplestorywiki.home.list.HomeListData
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_search.*
 
+// TODO: 검색 로그 기록
 class SearchActivity : AppCompatActivity() {
     private lateinit var firebaseFirestore: FirebaseFirestore
     private var jopData = arrayListOf<HomeListData>()

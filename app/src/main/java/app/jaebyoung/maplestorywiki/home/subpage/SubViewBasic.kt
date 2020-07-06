@@ -10,6 +10,7 @@ import app.jaebyoung.maplestorywiki.R
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_sub_view_basic.*
 
+// TODO : 직업별 상세 정보 데이터 구축.
 class SubViewBasic : Fragment() {
     private val storage = FirebaseFirestore.getInstance()
     override fun onCreateView(

@@ -1,16 +1,14 @@
 package app.jaebyoung.maplestorywiki.event
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import app.jaebyoung.maplestorywiki.R
 import kotlinx.android.synthetic.main.fragment_event.view.*
-import java.io.BufferedReader
-import java.io.InputStreamReader
 
+// TODO : 모바일 크롤링 - 메이플 공식 홈페이지
 class EventFragment : Fragment() {
 
     override fun onCreateView(

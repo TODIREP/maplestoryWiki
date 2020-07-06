@@ -17,6 +17,7 @@ import kotlinx.android.synthetic.main.activity_character_subpage.*
 import kotlinx.android.synthetic.main.content_character_subpage.*
 import java.io.File
 
+// TODO : 상단 앱바 부분 디자인 및 내용 추가
 class CharacterSubpage : AppCompatActivity(), View.OnClickListener {
     private var currentView: Int = 0
     private lateinit var jopName: String

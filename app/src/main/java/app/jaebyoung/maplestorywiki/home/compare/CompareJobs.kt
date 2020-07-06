@@ -12,7 +12,7 @@ import app.jaebyoung.maplestorywiki.home.list.HomeListAdapter
 import app.jaebyoung.maplestorywiki.home.list.HomeListData
 import kotlinx.android.synthetic.main.activity_compare_jobs.*
 
-// TODO : 공사 필요함.
+// TODO : SearchForCompare 완성 후 수정하기
 class CompareJobs : AppCompatActivity(), View.OnClickListener {
     //    private lateinit var keyboardManager: InputMethodManager
 //    private val db = FirebaseFirestore.getInstance()
