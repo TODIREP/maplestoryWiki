@@ -12,21 +12,13 @@ import app.jaebyoung.maplestorywiki.R
 
 // TODO: 공식 홈페이지 크롤링하기
 class UpdateFragment : Fragment() {
-
-    private lateinit var updateViewModel: UpdateViewModel
-
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        updateViewModel =
-                ViewModelProviders.of(this).get(UpdateViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_update, container, false)
         val textView: TextView = root.findViewById(R.id.text_update)
-        updateViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
         return root
     }
 }

@@ -20,8 +20,8 @@ import java.io.File
 // TODO : 상단 앱바 부분 디자인 및 내용 추가
 class CharacterSubpage : AppCompatActivity(), View.OnClickListener {
     private var currentView: Int = 0
-    private lateinit var jopName: String
-    private lateinit var jopType: String
+    private lateinit var jobName: String
+    private lateinit var jobType: String
     private var basicFragment: Fragment? = null
     private val storage = FirebaseStorage.getInstance()
 
@@ -57,9 +57,9 @@ class CharacterSubpage : AppCompatActivity(), View.OnClickListener {
             ch_sub_toolbar_image.setImageBitmap(bitmap)
         }
 
-        jopName = data.jopName
-        jopType = data.jopType
-        ch_sub_toolbar.title = jopName
+        jobName = data.jobName
+        jobType = data.jobType
+        ch_sub_toolbar.title = jobName
 
         sub_view_basic_layout.setOnClickListener(this)
         sub_view_skills_layout.setOnClickListener(this)
@@ -89,8 +89,8 @@ class CharacterSubpage : AppCompatActivity(), View.OnClickListener {
                 }
                 val fragment = SubViewBasic()
                 val bundle = Bundle()
-                bundle.putString("jop_name", jopName)
-                bundle.putString("jop_type", jopType)
+                bundle.putString("job_name", jobName)
+                bundle.putString("job_type", jobType)
                 fragment.arguments = bundle
 
                 replaceFragment(fragment)
@@ -105,8 +105,8 @@ class CharacterSubpage : AppCompatActivity(), View.OnClickListener {
                 }
                 val fragment = SubViewSkills()
                 val bundle = Bundle()
-                bundle.putString("jop_name", jopName)
-                bundle.putString("jop_type", jopType)
+                bundle.putString("job_name", jobName)
+                bundle.putString("job_type", jobType)
                 fragment.arguments = bundle
 
                 replaceFragment(fragment)

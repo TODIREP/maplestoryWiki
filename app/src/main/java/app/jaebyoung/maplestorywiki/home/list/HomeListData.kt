@@ -4,10 +4,10 @@ import java.io.Serializable
 
 class HomeListData(
     val portrait: String,
-    val jopName: String,
-    val jopType: String,
-    val jopGroup: String,
-    val jopLevel: String
+    val jobName: String,
+    val jobType: String,
+    val jobGroup: String,
+    val jobLevel: String
 ) : Serializable {
     private var portraitPath: String? = null
 

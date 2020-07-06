@@ -40,7 +40,7 @@ class SearchResultAdapter(private val context: Context, private val data: ArrayL
         private val resultText: TextView = itemView.findViewById(R.id.search_result_text)
 
         fun bind(data: SearchResult) {
-            resultText.text = data.jopName
+            resultText.text = data.jobName
 
             itemView.setOnClickListener {
                 val pos = adapterPosition

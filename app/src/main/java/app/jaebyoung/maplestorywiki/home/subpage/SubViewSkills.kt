@@ -20,8 +20,8 @@ class SubViewSkills : Fragment(), View.OnClickListener {
     private lateinit var skillsView: RecyclerView
     private lateinit var skillsAdapter: RecyclerView.Adapter<SkillListAdapter.Holder>
     private var skillList = arrayListOf<SkillListData>()
-    private lateinit var jopName: String
-    private lateinit var jopType: String
+    private lateinit var jobName: String
+    private lateinit var jobType: String
 
     private var skillList0 = arrayListOf<SkillListData>()
     private var skillList1 = arrayListOf<SkillListData>()
@@ -38,8 +38,8 @@ class SubViewSkills : Fragment(), View.OnClickListener {
         val view = inflater.inflate(R.layout.fragment_sub_view_skills, container, false)
         if (arguments != null) {
             val bundle = arguments
-            jopName = bundle!!.getString("jop_name")!!
-            jopType = bundle.getString("jop_type")!!
+            jobName = bundle!!.getString("job_name")!!
+            jobType = bundle.getString("job_type")!!
         }
         loadData()
         makeSkillList(view)
@@ -57,21 +57,21 @@ class SubViewSkills : Fragment(), View.OnClickListener {
 
     private fun loadData() {
         val storage = FirebaseFirestore.getInstance()
-        var basic_jop = "없음"
-        when (jopType) {
+        var basic_job = "없음"
+        when (jobType) {
             "시그너스" -> {
-                basic_jop = "시그너스 기사단"
+                basic_job = "시그너스 기사단"
             }
             "레지스탕스" -> {
-                basic_jop = "레지스탕스(메이플스토리)"
+                basic_job = "레지스탕스(메이플스토리)"
             }
             "모험가" -> {
-                basic_jop = "초보자"
+                basic_job = "초보자"
             }
         }
 
-        if (basic_jop != "없음") {
-            storage.collection("캐릭터").document(basic_jop).collection("0차스킬")
+        if (basic_job != "없음") {
+            storage.collection("캐릭터").document(basic_job).collection("0차스킬")
                 .get().addOnSuccessListener { result ->
                     for (document in result) {
                         val data = document.data
@@ -94,7 +94,7 @@ class SubViewSkills : Fragment(), View.OnClickListener {
                 }
         }
 
-        storage.collection("캐릭터").document(jopName).collection("0차스킬")
+        storage.collection("캐릭터").document(jobName).collection("0차스킬")
             .get().addOnSuccessListener { result ->
                 for (document in result) {
                     val data = document.data
@@ -115,7 +115,7 @@ class SubViewSkills : Fragment(), View.OnClickListener {
                 }
                 skillsAdapter.notifyDataSetChanged()
             }
-        storage.collection("캐릭터").document(jopName).collection("1차스킬")
+        storage.collection("캐릭터").document(jobName).collection("1차스킬")
             .get().addOnSuccessListener { result ->
                 for (document in result) {
                     val data = document.data
@@ -131,7 +131,7 @@ class SubViewSkills : Fragment(), View.OnClickListener {
                     )
                 }
             }
-        storage.collection("캐릭터").document(jopName).collection("2차스킬")
+        storage.collection("캐릭터").document(jobName).collection("2차스킬")
             .get().addOnSuccessListener { result ->
                 for (document in result) {
                     val data = document.data
@@ -147,7 +147,7 @@ class SubViewSkills : Fragment(), View.OnClickListener {
                     )
                 }
             }
-        storage.collection("캐릭터").document(jopName).collection("3차스킬")
+        storage.collection("캐릭터").document(jobName).collection("3차스킬")
             .get().addOnSuccessListener { result ->
                 for (document in result) {
                     val data = document.data
@@ -163,7 +163,7 @@ class SubViewSkills : Fragment(), View.OnClickListener {
                     )
                 }
             }
-        storage.collection("캐릭터").document(jopName).collection("4차스킬")
+        storage.collection("캐릭터").document(jobName).collection("4차스킬")
             .get().addOnSuccessListener { result ->
                 for (document in result) {
                     val data = document.data
@@ -179,7 +179,7 @@ class SubViewSkills : Fragment(), View.OnClickListener {
                     )
                 }
             }
-        storage.collection("캐릭터").document(jopName).collection("5차스킬")
+        storage.collection("캐릭터").document(jobName).collection("5차스킬")
             .get().addOnSuccessListener { result ->
                 for (document in result) {
                     val data = document.data

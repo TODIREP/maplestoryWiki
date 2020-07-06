@@ -50,8 +50,8 @@ class HomeListAdapter(
     inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val storage = FirebaseStorage.getInstance()
         private val image: ImageView = itemView.findViewById(R.id.portrait_image)
-        private val name: TextView = itemView.findViewById(R.id.jop_title_name)
-        private val type: TextView = itemView.findViewById(R.id.jop_type_name)
+        private val name: TextView = itemView.findViewById(R.id.job_title_name)
+        private val type: TextView = itemView.findViewById(R.id.job_type_name)
 
         fun bind(data: HomeListData) {
             val imageRef = storage.getReferenceFromUrl(data.portrait)
@@ -68,16 +68,16 @@ class HomeListAdapter(
                     data.setPortraitPath(tempPath)
                     val bitmap = BitmapFactory.decodeFile(tempPath)
                     image.setImageBitmap(bitmap)
-                    name.text = data.jopName
-                    type.text = data.jopType
+                    name.text = data.jobName
+                    type.text = data.jobType
                 }.addOnFailureListener {
                     Log.d("테스트", "${data.portrait} 실패맨")
                 }
             } else {
                 val bitmap = BitmapFactory.decodeFile(imgPath)
                 image.setImageBitmap(bitmap)
-                name.text = data.jopName
-                type.text = data.jopType
+                name.text = data.jobName
+                type.text = data.jobType
             }
 
             itemView.setOnClickListener {

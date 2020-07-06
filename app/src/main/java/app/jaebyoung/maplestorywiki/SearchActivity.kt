@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.activity_search.*
 // TODO: 검색 로그 기록
 class SearchActivity : AppCompatActivity() {
     private lateinit var firebaseFirestore: FirebaseFirestore
-    private var jopData = arrayListOf<HomeListData>()
+    private var jobData = arrayListOf<HomeListData>()
     private var searchData = arrayListOf<SearchResult>()
     private lateinit var resultAdapter: RecyclerView.Adapter<SearchResultAdapter.Holder>
 
@@ -38,7 +38,7 @@ class SearchActivity : AppCompatActivity() {
         search_window_button.setOnClickListener {
             if (searchData.size == 1) {
                 val intent = intent
-                intent.putExtra("search_result", searchData[0].jopName)
+                intent.putExtra("search_result", searchData[0].jobName)
                 setResult(Activity.RESULT_OK, intent)
                 finish()
             }
@@ -50,13 +50,13 @@ class SearchActivity : AppCompatActivity() {
                     search_log_view.visibility = View.GONE
                     search_result_view.visibility = View.GONE
                     search_log_switch_off.visibility = View.VISIBLE
-                    search_log_off_text.text = resources.getString(R.string.jops_log_nothing)
+                    search_log_off_text.text = resources.getString(R.string.jobs_log_nothing)
                 }
                 false -> {
                     search_log_view.visibility = View.GONE
                     search_result_view.visibility = View.GONE
                     search_log_switch_off.visibility = View.VISIBLE
-                    search_log_off_text.text = resources.getString(R.string.jops_log_switch_off)
+                    search_log_off_text.text = resources.getString(R.string.jobs_log_switch_off)
                 }
             }
         }
@@ -74,6 +74,7 @@ class SearchActivity : AppCompatActivity() {
 
             override fun afterTextChanged(s: Editable?) {
                 val target = s.toString()
+                Log.d("테스트", target)
 
                 searchData.clear()
 
@@ -81,19 +82,24 @@ class SearchActivity : AppCompatActivity() {
                     search_log_view.visibility = View.GONE
                     search_result_view.visibility = View.GONE
                     search_log_switch_off.visibility = View.VISIBLE
+                    search_log_off_text.text = resources.getString(R.string.jobs_log_switch_off)
                 } else {
-                    for (data in jopData) {
-                        if (data.jopName.contains(target)) {
+                    for (data in jobData) {
+                        if (data.jobName.contains(target)) {
                             if (search_result_view.visibility == View.GONE) {
                                 search_log_view.visibility = View.GONE
                                 search_result_view.visibility = View.VISIBLE
                                 search_log_switch_off.visibility = View.GONE
                             }
-                            searchData.add(SearchResult(data.jopName, data.jopType, data.jopGroup))
+                            searchData.add(SearchResult(data.jobName, data.jobType, data.jobGroup))
                         }
                     }
-                    if (searchData.isNotEmpty()) {
-                        resultAdapter.notifyDataSetChanged()
+                    resultAdapter.notifyDataSetChanged()
+                    if (searchData.isEmpty()) {
+                        search_log_view.visibility = View.GONE
+                        search_result_view.visibility = View.GONE
+                        search_log_switch_off.visibility = View.VISIBLE
+                        search_log_off_text.text = resources.getString(R.string.search_result_nothing)
                     }
                 }
             }
@@ -104,6 +110,7 @@ class SearchActivity : AppCompatActivity() {
         super.onResume()
         if (search_log_switch.visibility == View.INVISIBLE) {
             search_log_switch.visibility = View.VISIBLE
+            search_log_off_text.text = resources.getString(R.string.jobs_log_switch_off)
         }
     }
 
@@ -115,10 +122,11 @@ class SearchActivity : AppCompatActivity() {
         resultView.layoutManager = LinearLayoutManager(this)
         resultView.setHasFixedSize(false)
 
-        (resultAdapter as SearchResultAdapter).setOnItemClickListener(object: SearchResultAdapter.OnItemClickListener {
+        (resultAdapter as SearchResultAdapter).setOnItemClickListener(object :
+            SearchResultAdapter.OnItemClickListener {
             override fun onItemClick(v: View, position: Int) {
                 val intent = getIntent()
-                intent.putExtra("search_result", searchData[position].jopName)
+                intent.putExtra("search_result", searchData[position].jobName)
                 setResult(Activity.RESULT_OK, intent)
                 finish()
             }
@@ -132,12 +140,12 @@ class SearchActivity : AppCompatActivity() {
                 for (document in result) {
                     val data = document.data
                     val portrait = data.get("jop_portrait").toString()
-                    val jopName = data.get("jop_name").toString()
-                    val jopType = data.get("jop_type").toString()
-                    val jopGroup = data.get("jop_group").toString()
-                    val jopLevel = data.get("jop_level").toString()
+                    val jobName = data.get("jop_name").toString()
+                    val jobType = data.get("jop_type").toString()
+                    val jobGroup = data.get("jop_group").toString()
+                    val jobLevel = data.get("jop_level").toString()
 
-                    jopData.add(HomeListData(portrait, jopName, jopType, jopGroup, jopLevel))
+                    jobData.add(HomeListData(portrait, jobName, jobType, jobGroup, jobLevel))
                 }
             }.addOnFailureListener {
                 Log.d("테스트", "에러발생 ${it}")

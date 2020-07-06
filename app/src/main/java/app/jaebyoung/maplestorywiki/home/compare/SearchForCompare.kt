@@ -16,30 +16,30 @@ import kotlinx.android.synthetic.main.activity_search_for_compare.*
 
 class SearchForCompare : AppCompatActivity() {
     private lateinit var firebaseFirestore: FirebaseFirestore
-    private var jopData = arrayListOf<HomeListData>()
+    private var jobData = arrayListOf<HomeListData>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_for_compare)
         firebaseFirestore = FirebaseFirestore.getInstance()
         loadData()
-        val toolbar: Toolbar = findViewById(R.id.search_jops_toolbar)
+        val toolbar: Toolbar = findViewById(R.id.search_jobs_toolbar)
         setSupportActionBar(toolbar)
 
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.setHomeAsUpIndicator(R.drawable.ic_cancel_back_button_white_36dp)
 
-        search_jops_log_switch.setOnCheckedChangeListener { buttonView, isChecked ->
+        search_jobs_log_switch.setOnCheckedChangeListener { buttonView, isChecked ->
             when (isChecked) {
                 true -> {
-                    search_jops_log_view.visibility = View.GONE
-                    if_jops_log_switch_off.visibility = View.VISIBLE
-                    log_off_text.text = resources.getString(R.string.jops_log_nothing)
+                    search_jobs_log_view.visibility = View.GONE
+                    if_jobs_log_switch_off.visibility = View.VISIBLE
+                    log_off_text.text = resources.getString(R.string.jobs_log_nothing)
                 }
                 false -> {
-                    search_jops_log_view.visibility = View.GONE
-                    if_jops_log_switch_off.visibility = View.VISIBLE
-                    log_off_text.text = resources.getString(R.string.jops_log_switch_off)
+                    search_jobs_log_view.visibility = View.GONE
+                    if_jobs_log_switch_off.visibility = View.VISIBLE
+                    log_off_text.text = resources.getString(R.string.jobs_log_switch_off)
                 }
             }
         }
@@ -52,12 +52,12 @@ class SearchForCompare : AppCompatActivity() {
                 for (document in result) {
                     val data = document.data
                     val portrait = data.get("jop_portrait").toString()
-                    val jopName = data.get("jop_name").toString()
-                    val jopType = data.get("jop_type").toString()
-                    val jopGroup = data.get("jop_group").toString()
-                    val jopLevel = data.get("jop_level").toString()
+                    val jobName = data.get("jop_name").toString()
+                    val jobType = data.get("jop_type").toString()
+                    val jobGroup = data.get("jop_group").toString()
+                    val jobLevel = data.get("jop_level").toString()
 
-                    jopData.add(HomeListData(portrait, jopName, jopType, jopGroup, jopLevel))
+                    jobData.add(HomeListData(portrait, jobName, jobType, jobGroup, jobLevel))
                 }
             }.addOnFailureListener {
                 Log.d("테스트", "에러발생 ${it}")

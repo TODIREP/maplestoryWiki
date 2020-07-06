@@ -1,3 +1,3 @@
 package app.jaebyoung.maplestorywiki
 
-class SearchResult(var jopName: String, var jopType: String, var jopGroup: String)
+class SearchResult(var jobName: String, var jobType: String, var jobGroup: String)

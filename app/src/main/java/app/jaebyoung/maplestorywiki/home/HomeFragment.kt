@@ -29,7 +29,6 @@ import kotlinx.android.synthetic.main.fragment_home.view.*
 
 class HomeFragment : Fragment(), View.OnClickListener {
     private val homelistsearch: Int = 10000
-    private lateinit var homeViewModel: HomeViewModel
 
     private lateinit var fabOpen: Animation
     private lateinit var fabClose: Animation
@@ -47,7 +46,6 @@ class HomeFragment : Fragment(), View.OnClickListener {
     private var saveList = arrayListOf<HomeListData>()
     private var currentFilter: Int = 0
 
-    private val firestorePath: String = "gs://maplestory-wiki.appspot.com"
     private lateinit var firebaseFirestore: FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,9 +60,6 @@ class HomeFragment : Fragment(), View.OnClickListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        homeViewModel =
-            ViewModelProviders.of(this).get(HomeViewModel::class.java)
-
         val view = inflater.inflate(R.layout.fragment_home, container, false)
         firebaseFirestore = FirebaseFirestore.getInstance()
 
@@ -119,7 +114,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
                         else -> {
                             val keyValue = keyGroup[position]
                             for (item in saveList) {
-                                if (item.jopGroup == keyValue) {
+                                if (item.jobGroup == keyValue) {
                                     homeList.add(item)
                                 }
                             }
@@ -148,13 +143,13 @@ class HomeFragment : Fragment(), View.OnClickListener {
                 for (document in result) {
                     val data = document.data
                     val portrait = data.get("jop_portrait").toString()
-                    val jopName = data.get("jop_name").toString()
-                    val jopType = data.get("jop_type").toString()
-                    val jopGroup = data.get("jop_group").toString()
-                    val jopLevel = data.get("jop_level").toString()
+                    val jobName = data.get("jop_name").toString()
+                    val jobType = data.get("jop_type").toString()
+                    val jobGroup = data.get("jop_group").toString()
+                    val jobLevel = data.get("jop_level").toString()
 
-                    homeList.add(HomeListData(portrait, jopName, jopType, jopGroup, jopLevel))
-                    saveList.add(HomeListData(portrait, jopName, jopType, jopGroup, jopLevel))
+                    homeList.add(HomeListData(portrait, jobName, jobType, jobGroup, jobLevel))
+                    saveList.add(HomeListData(portrait, jobName, jobType, jobGroup, jobLevel))
                 }
                 homeAdapter.notifyDataSetChanged()
             }.addOnFailureListener {
@@ -227,10 +222,10 @@ class HomeFragment : Fragment(), View.OnClickListener {
             when (requestCode) {
                 homelistsearch -> {
                     if (data != null) {
-                        val search_jop = data.getStringExtra("search_result")
-                        Log.d("테스트", "${search_jop}을(를) 검색합니다.")
+                        val search_job = data.getStringExtra("search_result")
+                        Log.d("테스트", "${search_job}을(를) 검색합니다.")
                         for (target in saveList) {
-                            if (target.jopName == search_jop) {
+                            if (target.jobName == search_job) {
                                 val intent = Intent(context, CharacterSubpage::class.java)
                                 intent.putExtra("data", target)
                                 startActivity(intent)

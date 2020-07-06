@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".home.compare.CompareJobContent"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".home.compare.SearchForCompare"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

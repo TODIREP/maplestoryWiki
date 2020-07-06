@@ -172,7 +172,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:text="@string/jops_log_switch_off"
+                        android:text="@string/jobs_log_switch_off"
                         android:textAlignment="center"
                         android:textColor="@color/colorSecondaryDark"
                         app:layout_constraintBottom_toBottomOf="parent"
