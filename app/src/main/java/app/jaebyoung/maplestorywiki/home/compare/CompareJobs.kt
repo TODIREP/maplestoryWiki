@@ -3,6 +3,7 @@ package app.jaebyoung.maplestorywiki.home.compare
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -15,8 +16,8 @@ import kotlinx.android.synthetic.main.activity_compare_jobs.*
 class CompareJobs : AppCompatActivity(), View.OnClickListener {
     private var isjobA: Boolean = false
     private var isjobB: Boolean = false
-    private val INSERT_job_A = 8120
-    private val INSERT_job_B = 8121
+    private val SEARCH_JOB_A_COMPARE = 8120
+    private val SEARCH_JOB_B_COMPARE = 8121
     private lateinit var jobA: String
     private lateinit var jobB: String
 
@@ -48,21 +49,23 @@ class CompareJobs : AppCompatActivity(), View.OnClickListener {
             }
             R.id.insert_job_a -> {
                 val intent = Intent(this, SearchActivity::class.java)
-                startActivityForResult(intent, INSERT_job_A)
+                startActivityForResult(intent, SEARCH_JOB_A_COMPARE)
             }
             R.id.insert_job_b -> {
                 val intent = Intent(this, SearchActivity::class.java)
-                startActivityForResult(intent, INSERT_job_B)
+                startActivityForResult(intent, SEARCH_JOB_B_COMPARE)
             }
         }
     }
 
     override fun onResume() {
         super.onResume()
-        insert_job_a.text = ""
-        insert_job_b.text = ""
-        bottom_button_layer.isEnabled = false
-        bottom_button_layer.setBackgroundColor(resources.getColor(R.color.grayColor))
+        if (isjobA != true && isjobB != true) {
+            insert_job_a.text = ""
+            insert_job_b.text = ""
+            bottom_button_layer.isEnabled = false
+            bottom_button_layer.setBackgroundColor(resources.getColor(R.color.grayColor))
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -81,7 +84,7 @@ class CompareJobs : AppCompatActivity(), View.OnClickListener {
 
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
-                INSERT_job_A -> {
+                SEARCH_JOB_A_COMPARE -> {
                     if (!isjobA) {
                         isjobA = true
                     }
@@ -94,7 +97,7 @@ class CompareJobs : AppCompatActivity(), View.OnClickListener {
                         insert_job_a.text = jobA
                     }
                 }
-                INSERT_job_B -> {
+                SEARCH_JOB_B_COMPARE -> {
                     if (!isjobB) {
                         isjobB = true
                     }

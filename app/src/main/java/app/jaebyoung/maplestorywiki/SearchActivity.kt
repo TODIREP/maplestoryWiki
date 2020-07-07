@@ -61,6 +61,7 @@ class SearchActivity : AppCompatActivity() {
             }
         }
 
+        search_content_area.requestFocus()
         search_content_area.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (search_log_switch.visibility == View.VISIBLE) {
@@ -74,7 +75,6 @@ class SearchActivity : AppCompatActivity() {
 
             override fun afterTextChanged(s: Editable?) {
                 val target = s.toString()
-                Log.d("테스트", target)
 
                 searchData.clear()
 
